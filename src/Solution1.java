@@ -9,6 +9,12 @@ import org.opencv.imgproc.Imgproc;
 import java.util.List;
 
 public class Solution1 extends ImageProcessor {
+    private double blockSize = 15;
+    private double c = 10;
+    // değeri, belirlenen yerel eşik değerinden çıkarılan sabit bir değeri temsil eder.
+    private double cannyThreshold1 = 50;
+    private double cannyThreshold2 = 150;
+
 
     public Solution1(double contrastThreshold) {
         super(contrastThreshold);
@@ -26,7 +32,7 @@ public class Solution1 extends ImageProcessor {
 
         // Adaptif eşikleme (Daha geniş eşikleme penceresi)
         Mat thresholded = new Mat();
-        Imgproc.adaptiveThreshold(equalized, thresholded, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY_INV, 15, 10);
+        Imgproc.adaptiveThreshold(equalized, thresholded, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY_INV, (int)blockSize, c);
 
         // Morfolojik işlemler (Daha küçük kernel boyutu)
         Mat morphKernel = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3, 3));
@@ -35,7 +41,7 @@ public class Solution1 extends ImageProcessor {
 
         // Kenar algılama
         Mat edges = new Mat();
-        Imgproc.Canny(morphed, edges, 50, 150);
+        Imgproc.Canny(morphed, edges, cannyThreshold1, cannyThreshold2);
 
         // Konturları bul
         List<MatOfPoint> contours = new java.util.ArrayList<>();
