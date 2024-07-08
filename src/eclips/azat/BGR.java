@@ -46,9 +46,7 @@ public BGR(double blue, double green,double red) {
 	this._BLUE=blue;
 }
 public BGR(double[] bgr) {
-//	this._BLUE=bgr[0];
-//	this._GREEN=bgr[1];
-//	this._RED=bgr[2];
+
 	for(int i=0;i<bgr.length;i++) {
 		if(i==0) {
 			this._BLUE=bgr[0];
