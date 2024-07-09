@@ -1,5 +1,6 @@
 import org.opencv.core.Mat;
 
+
 public abstract class ImageProcessor {
 	  protected double contrastThreshold;
 
@@ -9,3 +10,4 @@ public abstract class ImageProcessor {
 
 	    public abstract Mat processImage(Mat src);
 }
+

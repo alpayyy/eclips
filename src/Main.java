@@ -6,6 +6,7 @@ import org.opencv.highgui.HighGui;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.Scanner;
+
 public class Main {
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -13,10 +14,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
 
-    
         System.out.println("Lütfen resim dosyasının yolunu giriniz:");
         String imagePath = scanner.nextLine();
 
@@ -26,10 +25,9 @@ public class Main {
             return;
         }
 
-  
         System.out.println("Lütfen çözüm yolunu seçiniz (1 veya 2):");
-        int choice = scanner.nextInt();//integer değer okumayı sağlar
-        double contrastThreshold = 1.5;
+        int choice = scanner.nextInt();
+        double contrastThreshold =1.5;
         ImageProcessor processor;
 
         if (choice == 1) {
@@ -40,18 +38,16 @@ public class Main {
             System.out.println("Geçersiz seçim!");
             return;
         }
-     
+
         Mat output = processor.processImage(src);
-      
 
         Mat resizedOutput = new Mat();
         Size newSize = new Size(800, 600);
         Imgproc.resize(output, resizedOutput, newSize);
-       
 
         HighGui.imshow("Yazı ve Arka Plan Renkleri Çok Yakın Alanlar", resizedOutput);
         HighGui.waitKey();
-       
+
         src.release();
         output.release();
         resizedOutput.release();

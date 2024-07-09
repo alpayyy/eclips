@@ -9,107 +9,71 @@ import org.opencv.imgproc.Imgproc;
 import java.util.List;
 
 public class Solution1 extends ImageProcessor {
-    private double blockSize = 15;
-    private double c = 10;
-<<<<<<< Updated upstream
-    // değeri, belirlenen yerel eşik değerinden çıkarılan sabit bir değeri temsil eder.
-    private double cannyThreshold1 = 50;
-    private double cannyThreshold2 = 150;
-=======
-    // değeri, belirlenen yerel eşik değerinden çıkarılan sabit değer
-    private double cannyThreshold1 = 50;
-    private double cannyThreshold2 = 150;
-    private double thickness=2;
->>>>>>> Stashed changes
+	private double blockSize = 15;
+	private double c = 10;
 
+	
+	private double cannyThreshold1 = 50;
+	private double cannyThreshold2 = 150;
+	private double thickness = 2;
 
-    public Solution1(double contrastThreshold) {
-        super(contrastThreshold);
-    }
+	public Solution1(double contrastThreshold) {
+		super(contrastThreshold);
+	}
 
-    @Override
-    public Mat processImage(Mat src) {
-     
-        Mat gray = new Mat();
-        Imgproc.cvtColor(src, gray, Imgproc.COLOR_BGR2GRAY);
+	@Override
+	public Mat processImage(Mat src) {
 
-        // Kontrastı artırmak için histogram dengeleme
-        Mat equalized = new Mat();
-        Imgproc.equalizeHist(gray, equalized);
+		Mat gray = new Mat();
+		Imgproc.cvtColor(src, gray, Imgproc.COLOR_BGR2GRAY);
 
-<<<<<<< Updated upstream
-        // Adaptif eşikleme (Daha geniş eşikleme penceresi)
-=======
-    
->>>>>>> Stashed changes
-        Mat thresholded = new Mat();
-        Imgproc.adaptiveThreshold(equalized, thresholded, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY_INV, (int)blockSize, c);
+		Mat equalized = new Mat();
+		Imgproc.equalizeHist(gray, equalized);
 
-        // Morfolojik işlemler (Daha küçük kernel boyutu)
-        Mat morphKernel = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3, 3));
-        Mat morphed = new Mat();
-        Imgproc.morphologyEx(thresholded, morphed, Imgproc.MORPH_CLOSE, morphKernel);
+		Mat thresholded = new Mat();
+		Imgproc.adaptiveThreshold(equalized, thresholded, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C,
+				Imgproc.THRESH_BINARY_INV, (int) blockSize, c);
 
-<<<<<<< Updated upstream
-        // Kenar algılama
-        Mat edges = new Mat();
-        Imgproc.Canny(morphed, edges, cannyThreshold1, cannyThreshold2);
+		
+		Mat morphKernel = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3, 3));
+		Mat morphed = new Mat();
+		Imgproc.morphologyEx(thresholded, morphed, Imgproc.MORPH_CLOSE, morphKernel);
 
-        // Konturları bul
-=======
-  
-        Mat edges = new Mat();
-        Imgproc.Canny(morphed, edges, cannyThreshold1, cannyThreshold2);
+		Mat edges = new Mat();
+		Imgproc.Canny(morphed, edges, cannyThreshold1, cannyThreshold2);
 
+		List<MatOfPoint> contours = new java.util.ArrayList<>();
+		Mat hierarchy = new Mat();
+		Imgproc.findContours(edges, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
->>>>>>> Stashed changes
-        List<MatOfPoint> contours = new java.util.ArrayList<>();
-        Mat hierarchy = new Mat();
-        Imgproc.findContours(edges, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
+		Mat output = src.clone();
+		for (MatOfPoint contour : contours) {
+			Rect rect = Imgproc.boundingRect(contour);
 
-        // Konturları dikdörtgenlerle çerçevele
-        Mat output = src.clone();
-        for (MatOfPoint contour : contours) {
-            Rect rect = Imgproc.boundingRect(contour);
+			if (rect.width < 20 || rect.height < 20) {
+				continue; 
+			}
 
-<<<<<<< Updated upstream
-            // Minimum boyut kontrolü
-=======
-      
->>>>>>> Stashed changes
-            if (rect.width < 20 || rect.height < 20) {
-                continue; // Küçük konturları atla
-            }
+			Scalar meanColorRect = Core.mean(new Mat(src, rect));
+			double[] meanRectColor = { meanColorRect.val[2], meanColorRect.val[1], meanColorRect.val[0] };
 
-<<<<<<< Updated upstream
-            // Renk ortalamasını hesapla
-            Scalar meanColorRect = Core.mean(new Mat(src, rect));
-            double[] meanRectColor = {meanColorRect.val[2], meanColorRect.val[1], meanColorRect.val[0]};
+			double[] meanImageColor = Core.mean(src).val;
+			double contrast = ContrastUtils.calculateContrast(meanRectColor, meanImageColor);
 
-            // Renk ortalamasını ve toplam görüntü ortalamasını kullanarak kontrast hesaplama
-=======
-  
-            Scalar meanColorRect = Core.mean(new Mat(src, rect));
-            double[] meanRectColor = {meanColorRect.val[2], meanColorRect.val[1], meanColorRect.val[0]};
+			if (contrast <= contrastThreshold) {
+				Imgproc.rectangle(output, rect, new Scalar(0, 0, 255), (int) thickness);
+				System.out.println("Solution1 - Rectangle Coordinates: [Top-Left: (" + rect.x + ", " + rect.y
+						+ "), Bottom-Right: (" + (rect.x + rect.width) + ", " + (rect.y + rect.height) + ")]");
+			}
+		}
 
-     
->>>>>>> Stashed changes
-            double[] meanImageColor = Core.mean(src).val;
-            double contrast = ContrastUtils.calculateContrast(meanRectColor, meanImageColor);
+		gray.release();
+		equalized.release();
+		thresholded.release();
+		morphed.release();
+		edges.release();
+		hierarchy.release();
 
-            if (contrast <= contrastThreshold) {
-                Imgproc.rectangle(output, rect, new Scalar(0, 0, 255),(int)thickness);
-                System.out.println("Solution1 - Rectangle Coordinates: [Top-Left: (" + rect.x + ", " + rect.y + "), Bottom-Right: (" + (rect.x + rect.width) + ", " + (rect.y + rect.height) + ")]");
-            }
-        }
-
-        gray.release();
-        equalized.release();
-        thresholded.release();
-        morphed.release();
-        edges.release();
-        hierarchy.release();
-
-        return output;
-    }
+		return output;
+	}
 }
