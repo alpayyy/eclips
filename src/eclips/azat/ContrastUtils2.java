@@ -2,24 +2,28 @@ package eclips.azat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import org.opencv.core.Mat;
 
 public class ContrastUtils2 {
 
-	private static List<BGR> GetDifferentColors(Mat image) {
-		List<BGR> colors = new ArrayList<BGR>();
+
+	private static HashSet<BGR> GetDifferentColors(Mat image) {
+		List<BGR> colors=new ArrayList<BGR>();
 		for (int i = 0; i < image.height(); i++) {
 			for (int j = 0; j < image.width(); j++) {
 				double[] pixel = image.get(i, j);
 				BGR bgr = new BGR(pixel[0], pixel[1], pixel[2]);
-				if (!BGR.Any(colors, bgr)) {
+				if(!BGR.Any(colors, bgr)) {
 					colors.add(bgr);
 				}
+				
 			}
 		}
-		return colors;
+		return new HashSet<>(colors);
 	}
 
 	// Calculate Euclidan Distance
@@ -49,22 +53,35 @@ public class ContrastUtils2 {
 
 	public static double GetContrast(Mat image) {
 
-		List<BGR> diffBGRS = ContrastUtils2.GetDifferentColors(image);
+		HashSet<BGR> diffBGRS = ContrastUtils2.GetDifferentColors(image);
+		List<BGR> diffBGRs2=new ArrayList<>(diffBGRS);
 		BGR maxDiffBGR1 = null;
 		BGR maxDiffBGR2 = null;
-		double diff = 0;
-		for (int i = 0; i < diffBGRS.size(); i++) {
-			for (int j = i; j < diffBGRS.size(); j++) {
-				BGR bgr1 = diffBGRS.get(i);
-				BGR bgr2 = diffBGRS.get(j);
-				double currentDiff = ContrastUtils2.calculateColorDifference(bgr1, bgr2);
-				if (currentDiff > diff) {
-					diff = currentDiff;
-					maxDiffBGR1 = bgr1;
+		double diff = -1;
+		for(BGR bgr:diffBGRs2) {
+			for(BGR bgr2:diffBGRs2) {
+				double currentDiff=ContrastUtils2.calculateColorDifference(bgr, bgr2);
+				if(currentDiff>diff) {
+					diff=currentDiff;
+					maxDiffBGR1 = bgr;
 					maxDiffBGR2 = bgr2;
 				}
 			}
 		}
+		
+		
+//		for (int i = 0; i < diffBGRS.size(); i++) {
+//			for (int j = i; j < diffBGRS.size(); j++) {
+//				BGR bgr1 = diffBGRS.f;
+//				BGR bgr2 = bgrList[j];
+//				double currentDiff = ContrastUtils2.calculateColorDifference(bgr1, bgr2);
+//				if (currentDiff > diff) {
+//					diff = currentDiff;
+//					maxDiffBGR1 = bgr1;
+//					maxDiffBGR2 = bgr2;
+//				}
+//			}
+//		}
 		if (maxDiffBGR1 != null && maxDiffBGR2 != null) {
 
 			// Calculating Contrast
@@ -75,7 +92,7 @@ public class ContrastUtils2 {
 			double darkest = Math.min(luminance1, luminance2);
 			return (brightest + 0.05) / (darkest + 0.05);
 		}
-
+		
 		return 0;
 
 	}
