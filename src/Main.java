@@ -29,7 +29,7 @@ public class Main {
   
         System.out.println("Lütfen çözüm yolunu seçiniz (1 veya 2):");
         int choice = scanner.nextInt();//integer değer okumayı sağlar
-        double contrastThreshold = 30.5;
+        double contrastThreshold = 1.5;
         ImageProcessor processor;
 
         if (choice == 1) {

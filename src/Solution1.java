@@ -11,9 +11,16 @@ import java.util.List;
 public class Solution1 extends ImageProcessor {
     private double blockSize = 15;
     private double c = 10;
+<<<<<<< Updated upstream
     // değeri, belirlenen yerel eşik değerinden çıkarılan sabit bir değeri temsil eder.
     private double cannyThreshold1 = 50;
     private double cannyThreshold2 = 150;
+=======
+    // değeri, belirlenen yerel eşik değerinden çıkarılan sabit değer
+    private double cannyThreshold1 = 50;
+    private double cannyThreshold2 = 150;
+    private double thickness=2;
+>>>>>>> Stashed changes
 
 
     public Solution1(double contrastThreshold) {
@@ -22,7 +29,7 @@ public class Solution1 extends ImageProcessor {
 
     @Override
     public Mat processImage(Mat src) {
-        // Gri tonlamaya çevir
+     
         Mat gray = new Mat();
         Imgproc.cvtColor(src, gray, Imgproc.COLOR_BGR2GRAY);
 
@@ -30,7 +37,11 @@ public class Solution1 extends ImageProcessor {
         Mat equalized = new Mat();
         Imgproc.equalizeHist(gray, equalized);
 
+<<<<<<< Updated upstream
         // Adaptif eşikleme (Daha geniş eşikleme penceresi)
+=======
+    
+>>>>>>> Stashed changes
         Mat thresholded = new Mat();
         Imgproc.adaptiveThreshold(equalized, thresholded, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY_INV, (int)blockSize, c);
 
@@ -39,11 +50,19 @@ public class Solution1 extends ImageProcessor {
         Mat morphed = new Mat();
         Imgproc.morphologyEx(thresholded, morphed, Imgproc.MORPH_CLOSE, morphKernel);
 
+<<<<<<< Updated upstream
         // Kenar algılama
         Mat edges = new Mat();
         Imgproc.Canny(morphed, edges, cannyThreshold1, cannyThreshold2);
 
         // Konturları bul
+=======
+  
+        Mat edges = new Mat();
+        Imgproc.Canny(morphed, edges, cannyThreshold1, cannyThreshold2);
+
+
+>>>>>>> Stashed changes
         List<MatOfPoint> contours = new java.util.ArrayList<>();
         Mat hierarchy = new Mat();
         Imgproc.findContours(edges, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
@@ -53,21 +72,33 @@ public class Solution1 extends ImageProcessor {
         for (MatOfPoint contour : contours) {
             Rect rect = Imgproc.boundingRect(contour);
 
+<<<<<<< Updated upstream
             // Minimum boyut kontrolü
+=======
+      
+>>>>>>> Stashed changes
             if (rect.width < 20 || rect.height < 20) {
                 continue; // Küçük konturları atla
             }
 
+<<<<<<< Updated upstream
             // Renk ortalamasını hesapla
             Scalar meanColorRect = Core.mean(new Mat(src, rect));
             double[] meanRectColor = {meanColorRect.val[2], meanColorRect.val[1], meanColorRect.val[0]};
 
             // Renk ortalamasını ve toplam görüntü ortalamasını kullanarak kontrast hesaplama
+=======
+  
+            Scalar meanColorRect = Core.mean(new Mat(src, rect));
+            double[] meanRectColor = {meanColorRect.val[2], meanColorRect.val[1], meanColorRect.val[0]};
+
+     
+>>>>>>> Stashed changes
             double[] meanImageColor = Core.mean(src).val;
             double contrast = ContrastUtils.calculateContrast(meanRectColor, meanImageColor);
 
             if (contrast <= contrastThreshold) {
-                Imgproc.rectangle(output, rect, new Scalar(0, 0, 255), 2);
+                Imgproc.rectangle(output, rect, new Scalar(0, 0, 255),(int)thickness);
                 System.out.println("Solution1 - Rectangle Coordinates: [Top-Left: (" + rect.x + ", " + rect.y + "), Bottom-Right: (" + (rect.x + rect.width) + ", " + (rect.y + rect.height) + ")]");
             }
         }
