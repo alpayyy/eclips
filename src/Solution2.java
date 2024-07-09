@@ -37,6 +37,7 @@ public class Solution2 extends ImageProcessor {
 				Imgproc.rectangle(outputImage, rect, new Scalar(255, 153, 255));
 			}
 		}
+		
 
 		blurred.release();
 		edges.release();

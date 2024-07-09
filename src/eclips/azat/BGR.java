@@ -7,12 +7,12 @@ public class BGR {
 	public static boolean Any(List<BGR> list,BGR bgr) {
 		int i=0;
 		for(BGR _rgb:list) {
-			if(bgr.get_RED()==_rgb.get_RED() && bgr.get_BLUE()==_rgb.get_BLUE() && bgr.get_GREEN()==_rgb.get_GREEN()) {
-				i++;
+			if(bgr.get_RED()==_rgb.get_RED() && bgr.get_BLUE()==_rgb.get_BLUE() && bgr.get_GREEN()==_rgb.get_GREEN() && _rgb!=bgr) {
+				return true;
 			}
 			
 		}
-		return i>1;
+		return false;
 	}
 private double _RED, _GREEN, _BLUE;
 
