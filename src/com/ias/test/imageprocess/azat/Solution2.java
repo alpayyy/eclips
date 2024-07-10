@@ -1,8 +1,19 @@
+package com.ias.test.imageprocess.azat;
+
 import org.opencv.core.*;
+
 import org.opencv.imgproc.Imgproc;
+
+import com.ias.test.imageprocess.FileOperation;
+import com.ias.test.imageprocess.ImageProcessor;
+import com.ias.test.imageprocess.*;
 
 import eclips.azat.ContrastUtils2;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +23,7 @@ public class Solution2 extends ImageProcessor {
 	}
 
 	@Override
-	public Mat processImage(Mat src) {
+	protected Result getContrastErrors(Mat src) {
 
 		// Copying original image
 		Mat outputImage = new Mat();
@@ -27,7 +38,7 @@ public class Solution2 extends ImageProcessor {
 		List<MatOfPoint> contours = new java.util.ArrayList<>();
 		Mat hierarchy = new Mat();
 		Imgproc.findContours(edges, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
-
+		String contrastErrors = "";
 		Mat roi;
 		for (MatOfPoint contour : contours) {
 			Rect rect = Imgproc.boundingRect(contour);
@@ -35,14 +46,15 @@ public class Solution2 extends ImageProcessor {
 			double contrast = ContrastUtils2.GetContrast(roi);
 			if (contrast != 0 && contrast < contrastThreshold) {
 				Imgproc.rectangle(outputImage, rect, new Scalar(255, 153, 255));
+				contrastErrors += String.valueOf(rect.x) + " , "+String.valueOf(rect.y)+ "-> Contrast = " + String.valueOf(contrast) + "\n";
 			}
 		}
 		
-
 		blurred.release();
 		edges.release();
 		hierarchy.release();
 
-		return outputImage;
+		
+		return new Result(outputImage,contrastErrors);
 	}
 }
