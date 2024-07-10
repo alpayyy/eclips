@@ -1,3 +1,4 @@
+package com.ias.test.imageprocess.morphology;
 public class ContrastUtils {
 
 	public static double calculateContrast(double[] rgb1, double[] rgb2) {

@@ -1,9 +1,14 @@
+package com.ias.test.imageprocess;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.highgui.HighGui;
 import org.opencv.imgproc.Imgproc;
+
+import com.ias.test.imageprocess.ImageProcessor;
+import com.ias.test.imageprocess.azat.Solution2;
+import com.ias.test.imageprocess.morphology.Solution1;
 
 import java.util.Scanner;
 

@@ -1,5 +1,8 @@
+package com.ias.test.imageprocess.azat;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
+
+import com.ias.test.imageprocess.ImageProcessor;
 
 import eclips.azat.ContrastUtils2;
 
