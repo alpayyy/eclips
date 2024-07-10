@@ -9,25 +9,25 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import com.ias.test.imageprocess.ImageProcessor;
+import com.ias.test.imageprocess.morphology.contrast.ContrastCalculator;
 
 import java.util.List;
 
-public class Solution1 extends ImageProcessor {
+public class Morphology extends ImageProcessor {
 	private double blockSize = 15;
 	private double c = 10;
-
-	
-	private double cannyThreshold1 = 50;
-	private double cannyThreshold2 = 150;
+	private double cannyThresholdmin = 50;
+	private double cannyThresholdmax = 150;
 	private double thickness = 2;
+	private ContrastCalculator contrastCalculator;
 
-	public Solution1(double contrastThreshold) {
+	public Morphology(double contrastThreshold, ContrastCalculator contrastCalculator) {
 		super(contrastThreshold);
+		this.contrastCalculator = contrastCalculator;
 	}
 
 	@Override
 	public Mat processImage(Mat src) {
-
 		Mat gray = new Mat();
 		Imgproc.cvtColor(src, gray, Imgproc.COLOR_BGR2GRAY);
 
@@ -38,13 +38,12 @@ public class Solution1 extends ImageProcessor {
 		Imgproc.adaptiveThreshold(equalized, thresholded, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C,
 				Imgproc.THRESH_BINARY_INV, (int) blockSize, c);
 
-		
 		Mat morphKernel = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3, 3));
 		Mat morphed = new Mat();
 		Imgproc.morphologyEx(thresholded, morphed, Imgproc.MORPH_CLOSE, morphKernel);
 
 		Mat edges = new Mat();
-		Imgproc.Canny(morphed, edges, cannyThreshold1, cannyThreshold2);
+		Imgproc.Canny(morphed, edges, cannyThresholdmin, cannyThresholdmax);
 
 		List<MatOfPoint> contours = new java.util.ArrayList<>();
 		Mat hierarchy = new Mat();
@@ -61,12 +60,14 @@ public class Solution1 extends ImageProcessor {
 			Scalar meanColorRect = Core.mean(new Mat(src, rect));
 			double[] meanRectColor = { meanColorRect.val[2], meanColorRect.val[1], meanColorRect.val[0] };
 
-			double[] meanImageColor = Core.mean(src).val;
-			double contrast = ContrastUtils.calculateContrast(meanRectColor, meanImageColor);
+			Scalar meanColorImage = Core.mean(src);
+			double[] meanImageColor = { meanColorImage.val[2], meanColorImage.val[1], meanColorImage.val[0] };
+
+			double contrast = contrastCalculator.calculateContrast(meanRectColor, meanImageColor);
 
 			if (contrast <= contrastThreshold) {
 				Imgproc.rectangle(output, rect, new Scalar(0, 0, 255), (int) thickness);
-				System.out.println("Solution1 - Rectangle Coordinates: [Top-Left: (" + rect.x + ", " + rect.y
+				System.out.println("Rectangle Coordinates: [Top-Left: (" + rect.x + ", " + rect.y
 						+ "), Bottom-Right: (" + (rect.x + rect.width) + ", " + (rect.y + rect.height) + ")]");
 			}
 		}
