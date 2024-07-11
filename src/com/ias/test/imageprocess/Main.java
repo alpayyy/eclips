@@ -3,15 +3,17 @@ import org.opencv.core.Core;
 import com.ias.test.imageprocess.azat.Solution2;
 import com.ias.test.imageprocess.morphology.Morphology;
 import com.ias.test.imageprocess.morphology.contrast.ContrastCalculator;
-import com.ias.test.imageprocess.morphology.contrast.ContrastUtilsImp;
+import com.ias.test.imageprocess.morphology.contrast.ContrastUtilsImpl;
 
 import java.util.Scanner;
 
 public class Main {
+
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         System.out.println("OpenCV kütüphanesi yüklendi.");
     }
+
 
 
     public static void main(String[] args) {
@@ -24,7 +26,7 @@ public class Main {
         int choice = scanner.nextInt();
         double contrastThreshold = 1.5;
         ImageProcessor processor;
-        ContrastCalculator contrastCalculator = new ContrastUtilsImp();
+        ContrastCalculator contrastCalculator = new ContrastUtilsImpl();
 
         if (choice == 1) {
             processor = new Morphology(contrastThreshold,contrastCalculator);

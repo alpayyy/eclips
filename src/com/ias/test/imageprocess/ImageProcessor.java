@@ -1,5 +1,6 @@
 package com.ias.test.imageprocess;
 
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.highgui.HighGui;
@@ -9,6 +10,10 @@ import org.opencv.imgproc.Imgproc;
 
 
 public abstract class ImageProcessor {
+	static {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        System.out.println("OpenCV kütüphanesi yüklendi.");
+    }
     protected double contrastThreshold;
 
     public ImageProcessor(double contrastThreshold) {
