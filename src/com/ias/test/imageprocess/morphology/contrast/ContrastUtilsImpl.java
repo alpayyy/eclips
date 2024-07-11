@@ -1,7 +1,9 @@
 package com.ias.test.imageprocess.morphology.contrast;
 
-public class ContrastUtilsImp implements ContrastCalculator {
-	@Override
+
+public class ContrastUtilsImpl implements ContrastCalculator {
+
+    @Override
     public double calculateContrast(double[] rgb1, double[] rgb2) {
         double luminance1 = luminance(rgb1[0], rgb1[1], rgb1[2]);
         double luminance2 = luminance(rgb2[0], rgb2[1], rgb2[2]);
