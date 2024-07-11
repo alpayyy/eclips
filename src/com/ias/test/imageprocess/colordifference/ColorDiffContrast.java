@@ -20,22 +20,21 @@ import java.util.List;
 import java.util.Set;
 
 public class ColorDiffContrast extends ImageProcessor {
-	public ColorDiffContrast(double contrastThreshold) {
-		super(contrastThreshold);
-	}
-
+	
+	private final int cannyThreshold1=25;
+	private final int cannyThreshold2=100;
 	@Override
-	protected Result getContrastErrors(Mat src) {
+	protected Result getContrastErrors(Mat src,double contrastThreshold) {
 
 		// Copying original image
 		Mat outputImage = new Mat();
 		src.copyTo(outputImage);
-
+		//Blurring image to remove some small edges
 		Mat blurred = new Mat();
 		Imgproc.GaussianBlur(src, blurred, new Size(1, 1), 0);
-
+		//Finding edges by using Canny method
 		Mat edges = new Mat();
-		Imgproc.Canny(blurred, edges, 25, 100);
+		Imgproc.Canny(blurred, edges, cannyThreshold1, cannyThreshold2);
 
 		List<MatOfPoint> contours = new java.util.ArrayList<>();
 		Mat hierarchy = new Mat();
@@ -51,7 +50,7 @@ public class ColorDiffContrast extends ImageProcessor {
 				errorRects.add(new Point(rect.x, rect.y));
 			}
 		}
-		Imgcodecs.imwrite(Paths.get("").toAbsolutePath().toString() + "\\images\\outputimage.png", outputImage);
+		
 		blurred.release();
 		edges.release();
 		hierarchy.release();

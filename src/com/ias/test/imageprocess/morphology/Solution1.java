@@ -23,12 +23,10 @@ public class Solution1 extends ImageProcessor {
 	private double cannyThreshold2 = 150;
 	private double thickness = 2;
 
-	public Solution1(double contrastThreshold) {
-		super(contrastThreshold);
-	}
+	
 
 	@Override
-	protected Result getContrastErrors(Mat src) {
+	protected Result getContrastErrors(Mat src,double contrastThreshold) {
 
 		Mat gray = new Mat();
 		Imgproc.cvtColor(src, gray, Imgproc.COLOR_BGR2GRAY);

@@ -18,25 +18,28 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Lütfen resim dosyasının yolunu giriniz:");
+        System.out.println("Please enter image path...");
         String imagePath = scanner.nextLine();
 
        
 
-        System.out.println("Lütfen çözüm yolunu seçiniz (1 veya 2):");
+        System.out.println("Please Choose a Solution Method...");
+        System.out.println("1-) Morphology");
+        System.out.println("2-) Color Difference Method");
         int choice = scanner.nextInt();
         double contrastThreshold =1.5;
         ImageProcessor processor;
 
         if (choice == 1) {
-            processor = new Solution1(contrastThreshold);
+            processor = new Solution1();
         } else if (choice == 2) {
-            processor = new ColorDiffContrast(contrastThreshold);
+            processor = new ColorDiffContrast();
         } else {
-            System.out.println("Geçersiz seçim!");
+            System.out.println("Invalid Selection!!!");
             return;
         }
-        processor.printContrastErrors(imagePath);
+        //Drawing contrast errors and printing contrasts...
+        processor.printContrastErrors(imagePath,contrastThreshold);
         
 
         
