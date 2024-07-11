@@ -1,4 +1,4 @@
-package com.ias.test.imageprocess;
+package morphology.Coordinat;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,7 +8,7 @@ public class ReadCoordinates {
     public static void main(String[] args) {
 
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("contour_coordinates.txt"))) {  // Dosyayı proje kök dizininde okuyacak
+        try (BufferedReader reader = new BufferedReader(new FileReader("contour_coordinates.txt"))) {  
 
             String line;
             while ((line = reader.readLine()) != null) {

@@ -13,7 +13,7 @@ public class Main {
         System.out.println("Please enter the path to the image file:");
         String imagePath = scanner.nextLine();
 
-        System.out.println("Please select the solution (1 or 2):");
+        System.out.println("Please select the solution (1:Merve or 2):");
         int choice = scanner.nextInt();
         double contrastThreshold = 1.5;
         ImageProcessor processor;
