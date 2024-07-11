@@ -1,6 +1,5 @@
 package com.ias.test.imageprocess.morphology.contrast;
 
-
 public class ContrastUtilsImpl implements ContrastCalculator {
 
     @Override

@@ -1,10 +1,9 @@
 package com.ias.test.imageprocess;
-import java.util.Scanner;
-
+import org.opencv.core.Core;
 import com.ias.test.imageprocess.azat.Solution2;
 import com.ias.test.imageprocess.morphology.contrast.ContrastCalculator;
 import com.ias.test.imageprocess.morphology.contrast.ContrastUtilsImpl;
-
+import java.util.Scanner;
 import morphology.Morphology;
 
 public class Main {
