@@ -2,7 +2,6 @@ package com.ias.test.imageprocess;
 import java.util.Scanner;
 
 import com.ias.test.imageprocess.azat.Solution2;
-import com.ias.test.imageprocess.ImageProcessor;
 import com.ias.test.imageprocess.morphology.contrast.ContrastCalculator;
 import com.ias.test.imageprocess.morphology.contrast.ContrastUtilsImpl;
 

@@ -54,7 +54,7 @@ public class Morphology extends ImageProcessor {
 	    Mat output = src.clone();
 	    
 	    // Open the file for writing the coordinates
-	    try (FileWriter fileWriter = new FileWriter("contour_coordinates2.txt")) {  // Dosyayı proje kök dizininde oluşturuyoruz
+	    try (FileWriter fileWriter = new FileWriter("contour_coordinates2.txt")) {  
 	        for (MatOfPoint contour : contours) {
 	            Rect rect = Imgproc.boundingRect(contour);
 
