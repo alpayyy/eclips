@@ -1,5 +1,6 @@
 package com.ias.test.imageprocess;
 import java.io.FileNotFoundException;
+
 import java.nio.file.Paths;
 
 import org.opencv.core.Core;
@@ -17,7 +18,7 @@ public abstract class ImageProcessor {
 	        this.contrastThreshold = contrastThreshold;
 	    }
 	    
-	    public void processImage(String path){
+	    public void printContrastErrors(String path){
 	    	 System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	    	 
 	    	 Mat src=null;
@@ -40,7 +41,7 @@ public abstract class ImageProcessor {
 	         HighGui.waitKey();
 
 	         src.release();
-	        
+	         
 	    	//dosyayı yükle
 	    	//kaynakları al
 	    	

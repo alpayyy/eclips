@@ -7,7 +7,7 @@ import org.opencv.highgui.HighGui;
 import org.opencv.imgproc.Imgproc;
 
 import com.ias.test.imageprocess.ImageProcessor;
-import com.ias.test.imageprocess.azat.Solution2;
+import com.ias.test.imageprocess.colordifference.ColorDiffContrast;
 import com.ias.test.imageprocess.morphology.Solution1;
 
 import java.util.Scanner;
@@ -31,12 +31,12 @@ public class Main {
         if (choice == 1) {
             processor = new Solution1(contrastThreshold);
         } else if (choice == 2) {
-            processor = new Solution2(contrastThreshold);
+            processor = new ColorDiffContrast(contrastThreshold);
         } else {
             System.out.println("Geçersiz seçim!");
             return;
         }
-        processor.processImage(imagePath);
+        processor.printContrastErrors(imagePath);
         
 
         

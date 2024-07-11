@@ -1,4 +1,4 @@
-package com.ias.test.imageprocess.azat;
+package com.ias.test.imageprocess.colordifference;
 
 import java.util.ArrayList;
 import java.util.List;

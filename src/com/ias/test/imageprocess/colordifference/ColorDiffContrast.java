@@ -1,7 +1,7 @@
-package com.ias.test.imageprocess.azat;
+package com.ias.test.imageprocess.colordifference;
 
 import org.opencv.core.*;
-
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import com.ias.test.imageprocess.FileOperation;
@@ -15,10 +15,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class Solution2 extends ImageProcessor {
-	public Solution2(double contrastThreshold) {
+public class ColorDiffContrast extends ImageProcessor {
+	public ColorDiffContrast(double contrastThreshold) {
 		super(contrastThreshold);
 	}
 
@@ -38,23 +40,22 @@ public class Solution2 extends ImageProcessor {
 		List<MatOfPoint> contours = new java.util.ArrayList<>();
 		Mat hierarchy = new Mat();
 		Imgproc.findContours(edges, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
-		String contrastErrors = "";
 		Mat roi;
+		Set<Point> errorRects = new HashSet<Point>();
 		for (MatOfPoint contour : contours) {
 			Rect rect = Imgproc.boundingRect(contour);
 			roi = new Mat(src, rect);
 			double contrast = ContrastUtils2.GetContrast(roi);
 			if (contrast != 0 && contrast < contrastThreshold) {
 				Imgproc.rectangle(outputImage, rect, new Scalar(255, 153, 255));
-				contrastErrors += String.valueOf(rect.x) + " , "+String.valueOf(rect.y)+ "-> Contrast = " + String.valueOf(contrast) + "\n";
+				errorRects.add(new Point(rect.x, rect.y));
 			}
 		}
-		
+		Imgcodecs.imwrite(Paths.get("").toAbsolutePath().toString() + "\\images\\outputimage.png", outputImage);
 		blurred.release();
 		edges.release();
 		hierarchy.release();
 
-		
-		return new Result(outputImage,contrastErrors);
+		return new Result(outputImage, errorRects.toArray(new Point[errorRects.size()]));
 	}
 }

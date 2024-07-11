@@ -3,6 +3,7 @@ package com.ias.test.imageprocess.morphology;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -79,6 +80,6 @@ public class Solution1 extends ImageProcessor {
 		edges.release();
 		hierarchy.release();
 
-		return new Result(output,"");
+		return new Result(output,new Point[1]);
 	}
 }
