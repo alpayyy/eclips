@@ -1,4 +1,4 @@
-package com.ias.test.imageprocess.morphology;
+package morphology;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -54,7 +54,7 @@ public class Morphology extends ImageProcessor {
 	    Mat output = src.clone();
 	    
 	    // Open the file for writing the coordinates
-	    try (FileWriter fileWriter = new FileWriter("contour_coordinates.txt")) {  // Dosyayı proje kök dizininde oluşturuyoruz
+	    try (FileWriter fileWriter = new FileWriter("contour_coordinates.txt")) {  
 	        for (MatOfPoint contour : contours) {
 	            Rect rect = Imgproc.boundingRect(contour);
 
