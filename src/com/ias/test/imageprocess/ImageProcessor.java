@@ -7,13 +7,13 @@ import org.opencv.highgui.HighGui;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
-
-
 public abstract class ImageProcessor {
-	static {
+
+    static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        System.out.println("OpenCV kütüphanesi yüklendi.");
+        System.out.println("OpenCV library loaded.");
     }
+
     protected double contrastThreshold;
 
     public ImageProcessor(double contrastThreshold) {
@@ -21,21 +21,15 @@ public abstract class ImageProcessor {
     }
 
     public void process(String imagePath) {
-     
         Mat src = loadImage(imagePath);
 
         if (src != null) {
-          
             Mat result = this.processImage(src);
-
-           
             displayResult(result);
-
-          
             src.release();
             result.release();
         } else {
-            System.out.println("Görsel yüklenemedi: " + imagePath);
+            System.out.println("Failed to load image: " + imagePath);
         }
     }
 
@@ -48,7 +42,7 @@ public abstract class ImageProcessor {
         Size newSize = new Size(800, 600);
         Imgproc.resize(result, resizedOutput, newSize);
 
-        HighGui.imshow("Yazı ve Arka Plan Renkleri Çok Yakın Alanlar", resizedOutput);
+        HighGui.imshow("Text and Background Colors Very Close Areas", resizedOutput);
         HighGui.waitKey();
 
         resizedOutput.release();
