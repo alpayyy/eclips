@@ -94,7 +94,7 @@ public Mat processImage(Mat src) {
     hierarchy.release();
 
     Path outputDir = Paths.get("output");
-    if (!Files.exists(outputDir)) {
+    if (!Files.exists(outputDir)) {//Is there an output directory or create it
         try {
             Files.createDirectory(outputDir);
         } catch (IOException e) {
@@ -103,7 +103,7 @@ public Mat processImage(Mat src) {
     }
 
    
-    String outputPath = "output/processed_image.jpg";  
+    String outputPath = "output/processed_image.jpg";  // The full path to the file where the processed image will be saved.
     if (Imgcodecs.imwrite(outputPath, output)) {
         System.out.println("Image saved successfully at " + outputPath);
     } else {
