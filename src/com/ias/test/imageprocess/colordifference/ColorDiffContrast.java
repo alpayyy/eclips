@@ -1,9 +1,13 @@
-package com.ias.test.imageprocess.azat;
+package com.ias.test.imageprocess.colordifference;
+
+
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
+import com.ias.test.imageprocess.FileOperation;
 import com.ias.test.imageprocess.ImageProcessor;
+import com.ias.test.imageprocess.*;
 
 import eclips.azat.ContrastUtils2;
 
