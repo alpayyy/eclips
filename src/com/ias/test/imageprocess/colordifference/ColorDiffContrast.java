@@ -54,7 +54,7 @@ public class ColorDiffContrast extends ImageProcessor {
 		blurred.release();
 		edges.release();
 		hierarchy.release();
-
+		
 		return new Result(outputImage, errorRects.toArray(new Point[errorRects.size()]));
 	}
 }
