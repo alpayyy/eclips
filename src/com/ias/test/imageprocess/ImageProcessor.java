@@ -1,5 +1,4 @@
 package com.ias.test.imageprocess;
-<<<<<<< Updated upstream
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -16,28 +15,11 @@ public abstract class ImageProcessor {
     }
 
     protected double contrastThreshold;
-=======
-import org.opencv.core.Mat;
 
+    public ImageProcessor(double contrastThreshold) {
+        this.contrastThreshold = contrastThreshold;
+    }
 
-public abstract class ImageProcessor {
-	  protected double contrastThreshold;
->>>>>>> Stashed changes
-
-	    public ImageProcessor(double contrastThreshold) {
-	        this.contrastThreshold = contrastThreshold;
-	    }
-	    
-	    public void process(){
-	    	//dosyayı yükle
-	    	//kaynakları al
-	    	
-	    	Result result = this.processImage(null);
-	    	
-	    	//kaynakları boşalt
-	    }
-
-<<<<<<< Updated upstream
     public void process(String imagePath) {
         Mat src = loadImage(imagePath);
 
@@ -67,8 +49,4 @@ public abstract class ImageProcessor {
     }
 
     protected abstract Mat processImage(Mat src);
-=======
-	    protected abstract Mat processImage(Mat src);
->>>>>>> Stashed changes
 }
-
