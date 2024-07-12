@@ -10,7 +10,8 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import com.ias.test.imageprocess.ImageProcessor;
-import com.ias.test.imageprocess.morphology.contrast.ContrastCalculator;
+
+import morphology.contrast.ContrastCalculator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;

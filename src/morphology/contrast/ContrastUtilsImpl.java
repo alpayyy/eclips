@@ -1,4 +1,4 @@
-package com.ias.test.imageprocess.morphology.contrast;
+package morphology.contrast;
 
 public class ContrastUtilsImpl implements ContrastCalculator {
 
