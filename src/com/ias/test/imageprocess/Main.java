@@ -20,29 +20,29 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+  
+    	        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Please enter image path...");
-        String imagePath = scanner.nextLine();
+    	        System.out.println("Please enter image path...");
+    	        String imagePath = scanner.nextLine();
 
-        System.out.println("Please Choose a Solution Method...");
-        System.out.println("1-) Morphology");
-        System.out.println("2-) Color Difference Method");
-        int choice = scanner.nextInt();
-        double contrastThreshold = 1.5;
-        ImageProcessor processor;
-        ContrastCalculator contrastCalculator = new ContrastUtilsImpl();
+    	        System.out.println("Please Choose a Solution Method...");
+    	        System.out.println("1-) Morphology");
+    	        System.out.println("2-) Color Difference Method");
+    	        int choice = scanner.nextInt();
+    	        double contrastThreshold = 1.5;
+    	        ImageProcessor processor;
+    	        ContrastCalculator contrastCalculator = new ContrastUtilsImpl();
 
-        if (choice == 1) {
-            processor = new Morphology(contrastThreshold, contrastCalculator);
-        } else if (choice == 2) {
-            processor = new ColorDiffContrast();
-        } else {
-            System.out.println("Invalid Selection!!!");
-            return;
-        }
+    	        if (choice == 1) {
+    	            processor = new Morphology(contrastThreshold, contrastCalculator);
+    	        } else if (choice == 2) {
+    	            processor = new ColorDiffContrast();
+    	        } else {
+    	            System.out.println("Invalid Selection!!!");
+    	            return;
+    	        }
 
-        // Drawing contrast errors and printing contrasts...
-        processor.printContrastErrors(imagePath, contrastThreshold);
-    }
-}
+    	        processor.printContrastErrors(imagePath, contrastThreshold);
+    	    }
+    	}
