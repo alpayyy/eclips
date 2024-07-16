@@ -12,7 +12,7 @@ import org.opencv.imgproc.Imgproc;
 
 public abstract class ImageProcessor {
 
-    public void printContrastErrors(String path, double contrastThreshold) {
+    public Result2 printContrastErrors(String path, double contrastThreshold) {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         String outputPath = Paths.get("").toAbsolutePath().toString() + "\\images\\";
         Mat src = null;
@@ -27,28 +27,30 @@ public abstract class ImageProcessor {
         }
 
         // Process the image and get contrast errors
-        Result result = getContrastErrors(src, contrastThreshold);
+        OpenCVResult result = getContrastErrors(src, contrastThreshold);
 
         // Check if result or its error points are null
         if (result != null) {
-            String report = result.getErrorPointsReport();
+            String report = result.toString();
             FileOperation.WriteText(outputPath + "ErrorCoordinates.txt", report);
 
             Mat resizedOutput = new Mat();
             Size newSize = new Size(800, 600);
-            Imgproc.resize(result.get_image(), resizedOutput, newSize);
+            Imgproc.resize(result.getOutput(), resizedOutput, newSize);
 
             // Show image on the screen
             HighGui.imshow("Yazı ve Arka Plan Renkleri Çok Yakın Alanlar", resizedOutput);
             HighGui.waitKey();
-            Imgcodecs.imwrite(outputPath + "OutputImage.png", result.get_image());
+            Imgcodecs.imwrite(outputPath + "OutputImage.png", result.getOutput());
 
             src.release();
             resizedOutput.release();
+            return result;
         } else {
             System.out.println("Result is null.");
+            return null;
         }
     }
 
-    protected abstract Result getContrastErrors(Mat src, double contrastThreshold);
+    protected abstract OpenCVResult getContrastErrors(Mat src, double contrastThreshold);
 }

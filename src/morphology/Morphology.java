@@ -9,7 +9,10 @@ import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import com.ias.test.imageprocess.ImageProcessor;
+import com.ias.test.imageprocess.OpenCVResult;
 import com.ias.test.imageprocess.Result;
+import com.ias.test.imageprocess.Result2;
+
 import morphology.contrast.ContrastCalculator;
 import javax.swing.JFrame;
 import java.io.FileWriter;
@@ -35,7 +38,7 @@ public class Morphology extends ImageProcessor {
     }
 
     @Override
-    protected Result getContrastErrors(Mat src, double contrastThreshold) {
+    protected OpenCVResult getContrastErrors(Mat src, double contrastThreshold) {
         Mat gray = new Mat();
         Imgproc.cvtColor(src, gray, Imgproc.COLOR_BGR2GRAY);
 
@@ -106,6 +109,6 @@ public class Morphology extends ImageProcessor {
         String outputPath = "output/processed_image.jpg";
         Imgcodecs.imwrite(outputPath, output);
 
-        return new Result(output);
+        return new OpenCVResult(output);
     }
 }

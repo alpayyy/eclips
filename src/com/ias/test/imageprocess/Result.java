@@ -1,6 +1,7 @@
 package com.ias.test.imageprocess;
 
 import org.opencv.core.Mat;
+
 import org.opencv.core.Point;
 
 public class Result {
