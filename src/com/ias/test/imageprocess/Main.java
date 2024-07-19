@@ -1,6 +1,7 @@
 package com.ias.test.imageprocess;
 
 import org.opencv.core.Core;
+
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -9,12 +10,9 @@ import org.opencv.imgproc.Imgproc;
 
 import com.ias.test.imageprocess.ImageProcessor;
 import com.ias.test.imageprocess.colordifference.ColorDiffContrast;
-
-
-import morphology.contrast.ContrastCalculator;
-import morphology.contrast.ContrastUtilsImpl;
-import morphology.Morphology;
-
+import com.ias.test.imageprocess.morphology.Morphology;
+import com.ias.test.imageprocess.morphology.contrast.ContrastCalculator;
+import com.ias.test.imageprocess.morphology.contrast.ContrastUtilsImpl;
 
 import java.util.Scanner;
 

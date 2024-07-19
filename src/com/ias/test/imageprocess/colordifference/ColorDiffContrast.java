@@ -39,7 +39,7 @@ public class ColorDiffContrast extends ImageProcessor {
 		Mat hierarchy = new Mat();
 		Imgproc.findContours(edges, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 		Mat roi;
-		Set<com.ias.test.imageprocess.Rect> errorRects = new HashSet<com.ias.test.imageprocess.Rect>();
+		List<com.ias.test.imageprocess.Rect> errorRects = new ArrayList<com.ias.test.imageprocess.Rect>();
 		for (MatOfPoint contour : contours) {
 			Rect rect = Imgproc.boundingRect(contour);
 			roi = new Mat(src, rect);
@@ -50,7 +50,7 @@ public class ColorDiffContrast extends ImageProcessor {
 				errorRects.add(new com.ias.test.imageprocess.Rect(rect.x, rect.y, rect.width, rect.height));
 			}
 		}
-		Set<com.ias.test.imageprocess.Rect> resultRects=new HashSet<com.ias.test.imageprocess.Rect>();
+		//Set<com.ias.test.imageprocess.Rect> resultRects=new HashSet<com.ias.test.imageprocess.Rect>();
 		
 		
 		
@@ -59,6 +59,6 @@ public class ColorDiffContrast extends ImageProcessor {
 		edges.release();
 		hierarchy.release();
 		
-		return new OpenCVResult(outputImage, resultRects);
+		return new OpenCVResult(outputImage, errorRects);
 	}
 }

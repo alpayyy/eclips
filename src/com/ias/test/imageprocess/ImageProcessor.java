@@ -12,7 +12,7 @@ import org.opencv.imgproc.Imgproc;
 
 public abstract class ImageProcessor {
 
-    public Result2 printContrastErrors(String path, double contrastThreshold) {
+    public Result printContrastErrors(String path, double contrastThreshold) {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         String outputPath = Paths.get("").toAbsolutePath().toString() + "\\images\\";
         Mat src = null;
@@ -32,7 +32,7 @@ public abstract class ImageProcessor {
         // Check if result or its error points are null
         if (result != null) {
             String report = result.toString();
-            FileOperation.WriteText(outputPath + "ErrorCoordinates.txt", report);
+            //FileOperation.WriteText(outputPath + "ErrorCoordinates.txt", report);
 
             Mat resizedOutput = new Mat();
             Size newSize = new Size(800, 600);
@@ -41,6 +41,7 @@ public abstract class ImageProcessor {
             // Show image on the screen
             HighGui.imshow("Yazı ve Arka Plan Renkleri Çok Yakın Alanlar", resizedOutput);
             HighGui.waitKey();
+            FileOperation.CreateFiles(outputPath);
             Imgcodecs.imwrite(outputPath + "OutputImage.png", result.getOutput());
 
             src.release();
